@@ -14,3 +14,9 @@ repos:
         types: [go]
         language: golang
         pass_filenames: false
+      - id: go-lint
+        name: go lint
+        entry: hooks/run-golint.sh
+        files: \.(go)$
+        language: script
+        description: "Runs `golint`, requires https://github.com/golang/lint"
