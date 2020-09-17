@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"imjoseangel/functions"
 	"math"
 	"math/rand"
 	"sort"
@@ -27,13 +28,13 @@ const emoEmpty string = "\U0001F6BD"
 const emoTaken string = "\U0001F6B6"
 const emoDoor string = "\U0001F6AA"
 
-func makeRange(min, max int) []int {
-	a := make([]int, max-min+1)
-	for i := range a {
-		a[i] = min + i
-	}
-	return a
-}
+// func makeRange(min int, max int) []int {
+// 	NewList := make([]int, max-min+1)
+// 	for Item := range NewList {
+// 		NewList[Item] = min + Item
+// 	}
+// 	return NewList
+// }
 
 func sumArray(array []int) int {
 	result := 0
@@ -65,7 +66,13 @@ func init() {
 
 	rand.Seed(time.Now().UnixNano())
 	timePeeing = time.Duration(rand.Intn(maxtimepeeing-mintimepeeing+1) + mintimepeeing)
-	untaken = makeRange(1, stalls)
+	untaken = functions.RangeList{
+		MinList: 1,
+		MaxList: stalls,
+	}.MakeRange()
+
+	// untaken = makeRange(1, stalls)
+
 	newStall = int(math.Floor(float64(sumArray(untaken)) / float64(len(untaken))))
 	if stalls%2 == 0 {
 		left = sliceArray(untaken[0:newStall-1], 0)
