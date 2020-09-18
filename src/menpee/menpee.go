@@ -3,12 +3,14 @@ package main
 
 import (
 	"fmt"
-	"imjoseangel/functions"
 	"math"
 	"math/rand"
 	"sort"
 	"strings"
 	"time"
+
+	// run: `go get github.com/imjoseangel/functions-go`
+	"github.com/imjoseangel/functions-go"
 )
 
 var untaken []int
