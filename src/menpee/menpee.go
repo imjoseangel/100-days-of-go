@@ -55,9 +55,9 @@ func sliceArray(array []int, start int) []int {
 	return result
 }
 
-func index(slice []int, item int) int {
-	for result := range slice {
-		if slice[result] == item {
+func index(array []int, item int) int {
+	for result := range array {
+		if array[result] == item {
 			return result
 		}
 	}
