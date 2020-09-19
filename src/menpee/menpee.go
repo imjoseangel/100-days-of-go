@@ -75,8 +75,7 @@ func init() {
 
 	// untaken = makeRange(1, stalls)
 
-	untakenArray := functions.Array(untaken)
-	newStall = int(math.Floor(float64(untakenArray.SumArray()) / float64(len(untaken))))
+	newStall = int(math.Floor(float64(functions.Array(untaken).SumArray()) / float64(len(untaken))))
 	if stalls%2 == 0 {
 		left = sliceArray(untaken[0:newStall-1], 0)
 	} else {
