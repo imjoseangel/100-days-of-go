@@ -55,14 +55,14 @@ const emoDoor string = "\U0001F6AA"
 // 	return result
 // }
 
-func index(array []int, item int) int {
-	for result := range array {
-		if array[result] == item {
-			return result
-		}
-	}
-	return -1
-}
+// func index(array []int, item int) int {
+// 	for result := range array {
+// 		if array[result] == item {
+// 			return result
+// 		}
+// 	}
+// 	return -1
+// }
 
 func init() {
 
@@ -106,7 +106,7 @@ func takeStall() []string {
 				stall = untaken[randomIndex]
 			}
 		}
-		stallIndex := index(untaken, stall)
+		stallIndex := functions.IndexArray(untaken, stall)
 		untaken = append(untaken[:stallIndex], untaken[stallIndex+1:]...)
 	}
 
