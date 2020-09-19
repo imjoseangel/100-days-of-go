@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	// run: `go get github.com/imjoseangel/functions-go`
+	// run: `go get github.com/imjoseangel/functions-go@v1.0.5`
 	"github.com/imjoseangel/functions-go"
 )
 
