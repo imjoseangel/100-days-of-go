@@ -68,10 +68,10 @@ func init() {
 
 	rand.Seed(time.Now().UnixNano())
 	timePeeing = time.Duration(rand.Intn(maxtimepeeing-mintimepeeing+1) + mintimepeeing)
-	untaken = functions.RangeList{
+	untaken = functions.Range{
 		MinList: 1,
 		MaxList: stalls,
-	}.MakeRange()
+	}.RangeArray()
 
 	// untaken = makeRange(1, stalls)
 
