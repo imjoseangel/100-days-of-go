@@ -46,14 +46,14 @@ const emoDoor string = "\U0001F6AA"
 // 	return result
 // }
 
-func sliceArray(array []int, start int) []int {
+// func sliceArray(array []int, start int) []int {
 
-	result := []int{}
-	for i := start; i < len(array); i += 2 {
-		result = append(result, array[i])
-	}
-	return result
-}
+// 	result := []int{}
+// 	for i := start; i < len(array); i += 2 {
+// 		result = append(result, array[i])
+// 	}
+// 	return result
+// }
 
 func index(array []int, item int) int {
 	for result := range array {
@@ -77,11 +77,11 @@ func init() {
 
 	newStall = int(math.Floor(float64(functions.Array(untaken).SumArray()) / float64(len(untaken))))
 	if stalls%2 == 0 {
-		left = sliceArray(untaken[0:newStall-1], 0)
+		left = functions.SliceArray(untaken[0:newStall-1], 0)
 	} else {
-		left = sliceArray(untaken[0:newStall-1], 1)
+		left = functions.SliceArray(untaken[0:newStall-1], 1)
 	}
-	right = sliceArray(untaken[newStall:], 1)
+	right = functions.SliceArray(untaken[newStall:], 1)
 	stallPrint = strings.SplitN(strings.Repeat(emoEmpty, stalls)+emoDoor, "", stalls+1)
 
 }
