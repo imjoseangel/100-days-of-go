@@ -38,13 +38,13 @@ const emoDoor string = "\U0001F6AA"
 // 	return NewList
 // }
 
-func sumArray(array []int) int {
-	result := 0
-	for _, numb := range array {
-		result += numb
-	}
-	return result
-}
+// func sumArray(array []int) int {
+// 	result := 0
+// 	for _, numb := range array {
+// 		result += numb
+// 	}
+// 	return result
+// }
 
 func sliceArray(array []int, start int) []int {
 
@@ -75,7 +75,8 @@ func init() {
 
 	// untaken = makeRange(1, stalls)
 
-	newStall = int(math.Floor(float64(sumArray(untaken)) / float64(len(untaken))))
+	untakenArray := functions.Array(untaken)
+	newStall = int(math.Floor(float64(untakenArray.SumArray()) / float64(len(untaken))))
 	if stalls%2 == 0 {
 		left = sliceArray(untaken[0:newStall-1], 0)
 	} else {
