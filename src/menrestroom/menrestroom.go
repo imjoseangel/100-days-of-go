@@ -23,7 +23,7 @@ var stall int
 var stallPrint []string
 
 const stalls int = 10
-const stallFreq time.Duration = 2
+const stallFreq time.Duration = 1
 const mintimepeeing int = 1
 const maxtimepeeing int = 10
 const emoEmpty string = "\U0001F6BD"
