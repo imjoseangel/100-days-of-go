@@ -13,22 +13,26 @@ import (
 	"github.com/imjoseangel/functions-go"
 )
 
-var untaken []int
-var taken []int
-var timePeeing time.Duration
-var newStall int
-var left []int
-var right []int
-var stall int
-var stallPrint []string
+var (
+	untaken    []int
+	taken      []int
+	timePeeing time.Duration
+	newStall   int
+	left       []int
+	right      []int
+	stall      int
+	stallPrint []string
+)
 
-const stalls int = 10
-const stallFreq time.Duration = 1
-const mintimepeeing int = 1
-const maxtimepeeing int = 10
-const emoEmpty string = "\U0001F6BD"
-const emoTaken string = "\U0001F6B6"
-const emoDoor string = "\U0001F6AA"
+const (
+	stalls        int           = 10
+	stallFreq     time.Duration = 1
+	mintimepeeing int           = 1
+	maxtimepeeing int           = 10
+	emoEmpty      string        = "\U0001F6BD"
+	emoTaken      string        = "\U0001F6B6"
+	emoDoor       string        = "\U0001F6AA"
+)
 
 // func makeRange(min int, max int) []int {
 // 	NewList := make([]int, max-min+1)

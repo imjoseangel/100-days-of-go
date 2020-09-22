@@ -64,16 +64,32 @@ Python and Golang have different variable scopes (Local and Global) but the way 
 
 Additionally, Go is not a pure object oriented programming language. The way to manage functions and how to call them, changes significantly if you are used to program in Python.
 
-Let's define our variables:
+Let's define our constants and variables:
 
 #### Constants
 
-| Description                                 | Variable      | Type          |
+| Description                                 | Constant      | Type          |
 |---------------------------------------------|---------------|---------------|
-| Maximum Time a visitor is occupying a stall | maxtimepeeing | Int           |
-| Minimum Time a visitor is occupying a stall | mintimepeeing | Int           |
-| Number of Stalls                            | stalls        | Int           |
-| Emoji for Door                              | emoDoor       | string        |
-| Emoji for Empty stall                       | emoEmpty      | string        |
-| Emoji for Taken stall                       | emoTaken      | string        |
-| Stall Occupancy Frequency                   | stallfreq     | time.Duration |
+| Maximum time a visitor is occupying a stall | maxtimepeeing | Int           |
+| Minimum time a visitor is occupying a stall | mintimepeeing | Int           |
+| Number of stalls                            | stalls        | Int           |
+| Emoji for door                              | emoDoor       | string        |
+| Emoji for empty stall                       | emoEmpty      | string        |
+| Emoji for taken stall                       | emoTaken      | string        |
+| Stall occupancy frequency                   | stallfreq     | time.Duration |
+
+#### Vars
+
+| Description                         | Variable   | Type             |
+|-------------------------------------|------------|------------------|
+| Untaken stalls                      | untaken    | List of integers |
+| Taken stalls                        | taken      | List of integers |
+| time a visitor is occupying a stall | timePeeing | time.Duration    |
+| Stall occupied on every iteration   | stall      | Int              |
+| Left side of the stalls             | left       | List of integers |
+| Right side of the stalls            | right      | List of integers |
+| Shows stall status on Screen        | stallPrint | List of strings  |
+
+### The code explained
+
+First of all, we need to initialize all our variables with the startup values. We need a list of *n* stalls
