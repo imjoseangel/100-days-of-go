@@ -60,12 +60,20 @@ I'm going to explain What and How I learned implementing this algorithm in Pytho
 
 ### Variables
 
-Python and Golang have different variable scopes (Local and Global) but the way to define and use them is harder in Golang. Constant and variables types need to be properly defined in Golang. Go is a statically typed language and their variables cannot be changed at runtime as with Python.
+Python and Golang have different variable scopes (Local and Global) but the way to define and use them is harder in Golang. Constant and variables types need to be properly defined and due to the fact that it is a statically typed language, their variables cannot be changed at runtime as with Python.
 
-Additionally, Go is not a pure object oriented programming language and the way to manage functions and how to call them, changes significantly if you are use to program in Python.
+Additionally, Go is not a pure object oriented programming language. The way to manage functions and how to call them, changes significantly if you are used to program in Python.
 
-So let's define vars. We will need:
+Let's define our variables:
 
-| Description      | Variable | Type |
-|------------------|----------|------|
-| Number of Stalls | stalls   | Int  |
+#### Constants
+
+| Description                                 | Variable      | Type          |
+|---------------------------------------------|---------------|---------------|
+| Maximum Time a visitor is occupying a stall | maxtimepeeing | Int           |
+| Minimum Time a visitor is occupying a stall | mintimepeeing | Int           |
+| Number of Stalls                            | stalls        | Int           |
+| Emoji for Door                              | emoDoor       | string        |
+| Emoji for Empty stall                       | emoEmpty      | string        |
+| Emoji for Taken stall                       | emoTaken      | string        |
+| Stall Occupancy Frequency                   | stallfreq     | time.Duration |
