@@ -92,4 +92,59 @@ Let's define our constants and variables:
 
 ### The code explained
 
-First of all, we need to initialize all our variables with the startup values. We need a list of *n* stalls
+First of all, we need to initialize all our variables with the startup values. We need a list of *n untaken* stalls.
+
+**Python:**
+
+```py
+untaken = list(range(0, stalls))
+```
+
+If `stalls = 4`, it creates the list: [1, 2, 3, 4]
+
+**Go:**
+
+In go, there is no a built-in range function, so we need to create it first:
+
+```go
+type Range struct {
+	MinList int
+	MaxList int
+}
+
+// RangeArray ...
+// Created this way to use struct with a function inside a module
+func (arrayrange Range) RangeArray() []int {
+
+	result := make([]int, arrayrange.MaxList-arrayrange.MinList+1)
+	for Item := range result {
+		result[Item] = arrayrange.MinList + Item
+	}
+
+	return result
+}
+
+untaken = functions.Range{
+    MinList: 1,
+    MaxList: stalls,
+}.RangeArray()
+```
+
+I created this way to learn about struct and Object Oriented Programming (OOP) within Go.
+
+Let's go with the `timepeeing` var. This var will be created at init time (Another important topic that we will review later) and reset with a new value when calling the leaveStall function. It contains a random integer between `mintimepeeing` and `maxtimepeeing`.
+
+**Python:**
+
+```py
+timepeeing = random.randint(mintimepeeing, maxtimepeeing)
+```
+
+**Golang:**
+
+To generate a random value between two values in go, use this:
+
+```go
+rand.Seed(time.Now().UnixNano())
+timePeeing = time.Duration(rand.Intn(maxtimepeeing-mintimepeeing+1) + mintimepeeing)
+```
