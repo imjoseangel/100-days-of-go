@@ -79,11 +79,11 @@ func init() {
 
 	// untaken = makeRange(1, stalls)
 
-	newStall = int(math.Floor(float64(functions.Array(untaken).SumArray()) / float64(len(untaken))))
+	newStall = int(math.Ceil(float64(functions.Array(untaken).SumArray()) / float64(len(untaken))))
 	if stalls%2 == 0 {
-		left = functions.SliceArray(untaken[0:newStall-1], 0)
-	} else {
 		left = functions.SliceArray(untaken[0:newStall-1], 1)
+	} else {
+		left = functions.SliceArray(untaken[0:newStall-1], 0)
 	}
 	right = functions.SliceArray(untaken[newStall:], 1)
 	stallPrint = strings.SplitN(strings.Repeat(emoEmpty, stalls)+emoDoor, "", stalls+1)

@@ -92,6 +92,8 @@ Let's define our constants and variables:
 
 ### The code explained
 
+#### Generate a list of integers
+
 First of all, we need to initialize all our variables with the startup values. We need a list of *n untaken* stalls.
 
 **Python:**
@@ -130,7 +132,9 @@ untaken = functions.Range{
 }.RangeArray()
 ```
 
-I created this way to learn about struct and Object Oriented Programming (OOP) within Go.
+I created this way to learn about *structs* and Object Oriented Programming (OOP) within Go.
+
+#### Generate a random number from a given range
 
 Let's go with the `timepeeing` var. This var will be created at init time (Another important topic that we will review later) and reset with a new value when calling the leaveStall function. It contains a random integer between `mintimepeeing` and `maxtimepeeing`.
 
@@ -147,4 +151,68 @@ To generate a random value between two values in go, use this:
 ```go
 rand.Seed(time.Now().UnixNano())
 timePeeing = time.Duration(rand.Intn(maxtimepeeing-mintimepeeing+1) + mintimepeeing)
+```
+
+#### Calculate the stall to be taken on every iteration
+
+In the first iteration, the taken stall is the one in the middle of the untaken row. It is calculated with the sum of the integers of the array and divided by its length. The result is rounded to ceil.
+
+**Python:**
+
+```python
+new_stall = round(sum(untaken) / len(untaken) + .5)
+```
+
+**Golang:**
+
+There is no built-in implementation for the sum of the items of a list. I had to implement too.
+
+```go
+// Array ...
+type Array []int
+
+// SumArray ...
+// Created this way to use struct with a function inside a module
+func (array Array) SumArray() int {
+	result := 0
+	for _, numb := range array {
+		result += numb
+	}
+	return result
+}
+
+newStall = int(math.Ceil(float64(functions.Array(untaken).SumArray()) / float64(len(untaken))))
+```
+
+And again, I created this way to learn about OOP within Go. Cool, isn't it?
+
+## The Left and Right arrays with alternative stalls
+
+The idea is divide the stalls in two (Left and Right) given the already occupied newStall. Having this untaken list:
+
+`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]`
+
+If `newStall` is *5* in this scenario, the *left* list is `[0, 1, 2, 3, 4]` and the right list `[6, 7, 8, 9]`. Integers *4* and *6* are next to `newStall` and must be empty. Following the same rule, we will build a list of potential stalls to be taken:
+
+For the left side:
+
+`[1, 3]`
+
+For the right side:
+
+`[7, 9]`
+
+Let's do it. In Python, is quite easy:
+
+**Python:**
+
+```python
+left = untaken[1:new_stall:2]
+right = untaken[new_stall + 2::2]
+```
+
+Again, in golang I had to create a new function:
+
+**Golang:**
+
 ```
