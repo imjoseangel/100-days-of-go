@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
-	"sort"
 	"strings"
 	"time"
 
@@ -126,7 +125,7 @@ func leaveStall() {
 		oldStall := taken[0]
 		taken = append(taken[:0], taken[1:]...)
 		untaken = append(untaken, oldStall)
-		sort.Ints(untaken)
+		// sort.Ints(untaken)
 		stallPrint[oldStall-1] = emoEmpty
 		rand.Seed(time.Now().UnixNano())
 		timePeeing = time.Duration(rand.Intn(maxtimepeeing-mintimepeeing+1) + mintimepeeing)

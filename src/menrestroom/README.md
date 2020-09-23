@@ -335,9 +335,113 @@ if len(untaken) > 0 {
     stallIndex := functions.IndexArray(untaken, stall)
     untaken = append(untaken[:stallIndex], untaken[stallIndex+1:]...)
 }
+taken = append(taken, stall)
 
 ```
 
 ##### Create the stall for printing
 
-Once the logic
+To print the output on screen, we need to update the `stallPrint` list:
+
+**Python:**
+
+In Python, we need two steps, one to remove, one to insert.
+
+```python
+stall_print.pop(taken[-1])
+stall_print.insert(taken[-1], emo_taken)
+```
+
+**Golang:**
+
+In Go can be done just replacing:
+
+```golang
+stallPrint[taken[len(taken)-1]-1] = emoTaken
+```
+
+#### The Leave Stall logic
+
+A visitor can leave the stall, only when it is taken and following the arrive order (For now).
+
+**Python:**
+
+```python
+if taken:
+    old_stall = taken[0]
+    taken.remove(old_stall)
+    untaken.append(old_stall)
+```
+
+**Golang:**
+
+```golang
+oldStall := taken[0]
+taken = append(taken[:0], taken[1:]...)
+untaken = append(untaken, oldStall)
+```
+
+The `stall_print` does not change, we just need to leave it empty:
+
+**Python:**
+
+```python
+stall_print.pop(old_stall)
+stall_print.insert(old_stall, emo_empty)
+```
+
+**Golang:**
+
+```golang
+stallPrint[oldStall-1] = emoEmpty
+```
+
+And the `timepeeing` is recalculated:
+
+**Python:**
+
+```python
+timepeeing = random.randint(mintimepeeing, maxtimepeeing)
+```
+
+**Golang:**
+
+```golang
+rand.Seed(time.Now().UnixNano())
+timePeeing = time.Duration(rand.Intn(maxtimepeeing-mintimepeeing+1) + mintimepeeing)
+```
+
+As discussed, in future revisions we can order the `untaken` list and recalculate left and right with a more complex approach. For now, this is fine to learn.
+
+#### The final touch. *Timers*
+
+Probably the part that took me more time to put in place. To me, it was important to manage both *take* and *leave* options independently with specific times. I was thinking in Threading for Python but it changes the way it is managed in Go. Let's do it.
+
+**Python:**
+
+As simple as using the Threading Module and:
+
+```python
+threading.Timer(timepeeing, leave_stall).start()
+```
+
+Where `timepeeing` is the time and `leave_stall()` the function.
+
+**Golang:**
+
+It took me some time to understand [tickers](https://gobyexample.com/tickers) but finally I got it working. Once you get it, the logic it quite simple. Note the `Reset` timer option.
+
+```golang
+takeTicker := time.NewTicker(stallFreq * time.Second)
+leaveTicker := time.NewTicker(timePeeing * time.Second)
+
+select {
+case <-takeTicker.C:
+    takeStall()
+case <-leaveTicker.C:
+    leaveStall()
+    leaveTicker.Reset(timePeeing * time.Second)
+}
+```
+
+#### Orchestrating the solution
