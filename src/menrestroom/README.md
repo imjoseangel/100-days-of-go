@@ -110,20 +110,20 @@ In go, there is no a built-in range function, so we need to create it first:
 
 ```go
 type Range struct {
-	MinList int
-	MaxList int
+    MinList int
+    MaxList int
 }
 
 // RangeArray ...
 // Created this way to use struct with a function inside a module
 func (arrayrange Range) RangeArray() []int {
 
-	result := make([]int, arrayrange.MaxList-arrayrange.MinList+1)
-	for Item := range result {
-		result[Item] = arrayrange.MinList + Item
-	}
+    result := make([]int, arrayrange.MaxList-arrayrange.MinList+1)
+    for Item := range result {
+        result[Item] = arrayrange.MinList + Item
+    }
 
-	return result
+    return result
 }
 
 untaken = functions.Range{
@@ -174,11 +174,11 @@ type Array []int
 // SumArray ...
 // Created this way to use struct with a function inside a module
 func (array Array) SumArray() int {
-	result := 0
-	for _, numb := range array {
-		result += numb
-	}
-	return result
+    result := 0
+    for _, numb := range array {
+        result += numb
+    }
+    return result
 }
 
 newStall = int(math.Ceil(float64(functions.Array(untaken).SumArray()) / float64(len(untaken))))
@@ -186,7 +186,7 @@ newStall = int(math.Ceil(float64(functions.Array(untaken).SumArray()) / float64(
 
 And again, I created this way to learn about OOP within Go. Cool, isn't it?
 
-## The Left and Right arrays with alternative stalls
+#### The Left and Right arrays with alternative stalls
 
 The idea is divide the stalls in two (Left and Right) given the already occupied newStall. Having this untaken list:
 
@@ -215,4 +215,129 @@ Again, in golang I had to create a new function:
 
 **Golang:**
 
+```go
+// SliceArray ...
+func SliceArray(array []int, start int) []int {
+
+    result := []int{}
+    for i := start; i < len(array); i += 2 {
+        result = append(result, array[i])
+    }
+    return result
+}
+
+if stalls%2 == 0 {
+    left = functions.SliceArray(untaken[0:newStall-1], 1)
+} else {
+    left = functions.SliceArray(untaken[0:newStall-1], 0)
+}
+right = functions.SliceArray(untaken[newStall:], 1)
 ```
+
+With this function, we need to check if the `stalls` integer is even or odd to create the `left` list from `untaken` list. The start integer changes depending on the length of the list, something I need to improve in future releases.
+
+#### Printing on screen
+
+This is the easier one for the first stage. We need to prepare the empty stalls with the door and show it on screen:
+
+**Python:**
+
+```python
+stall_print = list(emo_empty * stalls + emo_door)
+```
+
+**Golang:**
+
+```go
+stallPrint = strings.SplitN(strings.Repeat(emoEmpty, stalls)+emoDoor, "", stalls+1)
+```
+
+#### Init Functions and Methods
+
+Before carry on with the main logic, I think it is interesting to refer about the way Python and Golang manage the Init functions.
+
+The `__init__` in **Python** is one of the main pieces when talking about OOP. This method initializes the object state. It contains the values and instructions executed at the time of the Object Creation.
+
+The `init()` function in **Golang** are defined in the package block. It contains the values and instructions executed at the time of the Package call although it runs only once even if the package is imported many times.
+
+#### Variable name convention
+
+I think it is also nice to realize that the name convention changes among programming languages. I recommend to search for the different naming conventions for Python and Golang on the Internet.
+
+For instance:
+
+`stall_print` for Python
+`stallPrint` for Go
+
+#### The Take Stall logic
+
+As explained in the ![The Algorithm](#the-algorithm) section, we need to move items between the `untaken` and `taken` lists and vice versa.
+
+When the process starts, it puts the middle of the stalls in the `taken` and paints the new scenario. After that, it checks if the `left` list has elements to use them. Then the `right` list and finally the ones unoccupied.
+
+The code:
+
+**Python:**
+
+```python
+        if untaken:
+            if not taken:
+                new_stall = new_stall
+            else:
+                if left:
+                    new_stall = random.choice(left)
+                    left.remove(new_stall)
+                elif right:
+                    new_stall = random.choice(right)
+                    right.remove(new_stall)
+                else:
+                    new_stall = random.choice(untaken)
+
+            untaken.remove(new_stall)
+            taken.append(new_stall)
+```
+
+**Golang:**
+
+To get the position of the stall, I created the IndexArray function, also take a look to the append built-in function. The [documentation](https://golang.org/pkg/builtin/#append) of the built-in package describes append.
+
+`func append(s []T, vs ...T) []T`
+
+```go
+// IndexArray ...
+func IndexArray(array []int, item int) int {
+    for result := range array {
+        if array[result] == item {
+            return result
+        }
+    }
+    return -1
+}
+
+if len(untaken) > 0 {
+    if len(taken) == 0 {
+        stall = newStall
+    } else {
+        if len(left) > 0 {
+            randomIndex := rand.Intn(len(left))
+            stall = left[randomIndex]
+            left = append(left[:randomIndex], left[randomIndex+1:]...)
+        } else if len(right) > 0 {
+            randomIndex := rand.Intn(len(right))
+            stall = right[randomIndex]
+            right = append(right[:randomIndex], right[randomIndex+1:]...)
+
+        } else {
+            randomIndex := rand.Intn(len(untaken))
+            stall = untaken[randomIndex]
+        }
+    }
+    stallIndex := functions.IndexArray(untaken, stall)
+    untaken = append(untaken[:stallIndex], untaken[stallIndex+1:]...)
+}
+
+```
+
+##### Create the stall for printing
+
+Once the logic
