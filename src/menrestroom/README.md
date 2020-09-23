@@ -445,3 +445,97 @@ case <-leaveTicker.C:
 ```
 
 #### Orchestrating the solution
+
+The program starts with the untaken list totally full, so we need to run the solution until the list becomes totally empty:
+
+**Python:**
+
+After creating the `newpee` object, we check the `untaken` variable:
+
+```python
+while newpee.untaken:
+```
+
+To print the result:
+
+```python
+for item in newpee.stall_print:
+    print(item, end=' ', flush=True)
+```
+
+**Golang:**
+
+The [golang Tour](https://tour.golang.org/flowcontrol/3) says: For is Go's "while". Then:
+
+```golang
+for len(untaken) > 0 {
+    }
+```
+
+To print:
+
+```golang
+for _, item := range stallPrint {
+    fmt.Print(item + " ")
+```
+
+## Final words
+
+I'm sure that the algorithm can be improved in functionality, efficiency and style but the idea is to focus in learning and having a small challenge to learn a new language.
+
+Don't forget to implement good practices and create unit tests for your libraries and functions. This is my first approach for *golang* just to understand how testing is implemented:
+
+```golang
+package functions
+
+import (
+    "reflect"
+    "testing"
+)
+
+var mylist = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+func TestRangeArray(t *testing.T) {
+    expected := mylist
+    newarray := Range{
+        MinList: 1,
+        MaxList: 10,
+    }
+    ret := newarray.RangeArray()
+
+    if !reflect.DeepEqual(ret, expected) {
+        t.Errorf("RangeArray() = %q, want %q", ret, expected)
+    }
+}
+
+func TestSumArray(t *testing.T) {
+    expected := 55
+    newarray := Array(mylist)
+    if ret := newarray.SumArray(); ret != expected {
+        t.Errorf("SumArray() = %q, want %q", ret, expected)
+    }
+}
+
+func TestSliceArray(t *testing.T) {
+    expectede := []int{2, 4, 6, 8, 10}
+    rete := SliceArray(mylist, 1)
+    expectedo := []int{1, 3, 5, 7, 9}
+    reto := SliceArray(mylist, 0)
+
+    if !reflect.DeepEqual(rete, expectede) {
+        t.Errorf("SliceArray() = %q, want %q", rete, expectede)
+    }
+
+    if !reflect.DeepEqual(reto, expectedo) {
+        t.Errorf("SliceArray() = %q, want %q", reto, expectedo)
+    }
+}
+
+func TestIndexArray(t *testing.T) {
+    expected := 5
+
+    if ret := IndexArray(mylist, 6); ret != expected {
+        t.Errorf("SumArray() = %q, want %q", ret, expected)
+    }
+}
+```
