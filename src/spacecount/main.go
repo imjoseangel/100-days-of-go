@@ -33,7 +33,7 @@ func main() {
 	if getErr != nil {
 		log.Fatal(getErr)
 	}
-
+	fmt.Printf("HTTP: %s\n", res.Status)
 	if res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -45,10 +45,13 @@ func main() {
 
 	persons := people{}
 	jsonErr := json.Unmarshal(body, &persons)
+	if jsonErr != nil {
+		log.Fatalf("unable to parse value: %q, error: %s", string(body), jsonErr.Error())
+	}
 
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
 	}
 
-	fmt.Println(persons.Number)
+	fmt.Printf("Number of people in space: %d\n", persons.Number)
 }
